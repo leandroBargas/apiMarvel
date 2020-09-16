@@ -17,6 +17,8 @@ const hash = createHash(timeStamp);
 const path = '/v1/public/characters';
 
 router.get('/', (req, res, next) => {
+  const limit = req.query.limit || 20;
+  console.log(req.query);
   request(
     'http://gateway.marvel.com' +
       path +
@@ -26,7 +28,9 @@ router.get('/', (req, res, next) => {
       '&apikey=' +
       publicKey +
       '&hash=' +
-      hash,
+      hash +
+      '&limit=' +
+      limit,
     function (error, response, body) {
       if (!error && response.statusCode == 200) {
         res.status(200).send(body);
