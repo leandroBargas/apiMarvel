@@ -18,6 +18,8 @@ const path = '/v1/public/characters';
 
 router.get('/', (req, res, next) => {
   const limit = req.query.limit || 20;
+  const search = req.query.search || '';
+  console.log(search);
   console.log(req.query);
   request(
     'http://gateway.marvel.com' +
@@ -30,7 +32,9 @@ router.get('/', (req, res, next) => {
       '&hash=' +
       hash +
       '&limit=' +
-      limit,
+      limit +
+      '&nameStartsWith=' +
+      search,
     function (error, response, body) {
       if (!error && response.statusCode == 200) {
         res.status(200).send(body);
